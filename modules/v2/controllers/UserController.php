@@ -24,78 +24,27 @@ class UserController extends BossBaseController
         ];
     }
 
+    // 获取用户列表
     public function actionGetUsers()
     {
-        $user_list = User::find()
-            ->select([
-                'user_id',
-                'tel',
-                'email',
-                'status',
-                'login_ip',
-                'login_time',
-                'login_count',
-                'del_flag',
-                'created_time',
-                'updated_time'
-            ])
-            ->asArray()
-            ->all();
-        
-        $res = [
-        	'code' => 0,
-        	'msg'=> '',
-        	'data' => $user_list
-        ];
-
+        $param = $_REQUEST;
+        $res = User::getUsers($param);
         return $res;
     }
 
-    public function actionGetUser()
+    // 获取单个用户信息
+    public function actionGetUserFromboss()
     {
-        $user_id = $_REQUEST['user_id'];
-
-        if ($user_id) {
-            $user = User::find()
-                ->select([
-                    'user_id',
-                    'tel',
-                    'email',
-                    'status',
-                    'login_ip',
-                    'login_time',
-                    'login_count',
-                    'del_flag',
-                    'created_time',
-                    'updated_time'
-                ])
-                ->where(['user_id' => $user_id])
-                ->asArray()
-                ->one();
-
-            if ($user) {
-                $res = [
-                    'code' => 0,
-                    'msg'=> '',
-                    'data' => $user
-                ];
-            } else {
-                $res = [
-                    'code' => 1,
-                    'msg'=> '用户不存在',
-                    'data' => null
-                ];
-            }
-            
-        } else {
-            $res = [
-                'code' => 1,
-                'msg'=> '请输入用户id',
-                'data' => null
-            ];
-        }
-
+        $param = $_REQUEST;
+        $res = User::getUser($param);
         return $res;
     }
 
+    // 修改用户禁用状态
+    public function actionChangeStatus()
+    {
+        $param = $_REQUEST;
+        $res = User::changeStatus($param);
+        return $res;
+    }
 }

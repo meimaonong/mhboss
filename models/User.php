@@ -73,7 +73,192 @@ class User extends \yii\db\ActiveRecord
         ];
     }
 
+    // 微信登录
+    public static function wxLogin($param)
+    {
+        $code = $param['code'];
 
+        $AppId = 'wx9fbec546b8295192';
+        $AppSecret = 'fc3339db92ca797f92e85ddc2371822b';
+
+        $reqUrl = 'https://api.weixin.qq.com/sns/jscode2session?appid='. $AppId .'&secret='. $AppSecret .'&js_code='. $code .'&grant_type=authorization_code';
+ 
+        $result = $this->httpGet($reqUrl);
+        $rObj = json_decode($result, true);
+
+        $user = User::findOne([
+            'weixin_openid' => $rObj['openid']
+        ]);
+
+        $access_token = md5($rObj['openid'] . $rObj['session_key']);
+
+        if ($user) {
+            $user->weixin_access_token = $access_token;
+            $user->save();
+        } else {
+            $user = new User();
+            $user->weixin_openid = $rObj['openid'];
+            $user->weixin_access_token = $access_token;
+            $user->created_time = Utils::getCurrentDateTime();
+            $user->updated_time = Utils::getCurrentDateTime();
+            $flag = $user->save();
+        }
+
+        
+        $res = [
+        	'code' => 0,
+        	'msg'=> '',
+        	'data' => $access_token
+        ];
+
+        return $res;
+    }
     
+    // 获取用户列表
+    public static function getUsers($param) 
+    {
+
+        $user_list = User::find()
+            ->select([
+                'user_id',
+                'tel',
+                'email',
+                'status',
+                'login_ip',
+                'login_time',
+                'login_count',
+                'del_flag',
+                'created_time',
+                'updated_time'
+            ])
+            ->asArray()
+            ->all();
+        
+        $res = [
+        	'code' => 0,
+        	'msg'=> '',
+        	'data' => $user_list
+        ];
+
+        return $res;
+
+    }
+
+    // 获取单个用户
+    public static function getUser($param) 
+    {
+
+        $user_id = $param['user_id'];
+
+        $user = User::find()
+            ->select([
+                'user_id',
+                'tel',
+                'email',
+                'status',
+                'login_ip',
+                'login_time',
+                'login_count',
+                'del_flag',
+                'created_time',
+                'updated_time'
+            ])
+            ->where(['user_id'=>$user_id,'status'=>0])
+            ->asArray()
+            ->one();
+
+        $res = [
+        	'code' => 0,
+        	'msg'=> '',
+        	'data' => $user
+        ];
+
+        return $res;
+
+    }
+
+    // boss获取单个用户
+    public static function getUserFromboss($param) 
+    {
+
+        $user_id = $param['user_id'];
+
+        $user = User::find()
+            ->select([
+                'user_id',
+                'tel',
+                'email',
+                'status',
+                'login_ip',
+                'login_time',
+                'login_count',
+                'del_flag',
+                'created_time',
+                'updated_time'
+            ])
+            ->where(['user_id'=>$user_id])
+            ->asArray()
+            ->one();
+
+        $res = [
+        	'code' => 0,
+        	'msg'=> '',
+        	'data' => $user
+        ];
+
+        return $res;
+
+    }
+
+    // 前台用户修改资料
+    public static function saveUser($param)
+    {
+        $user_id = $param['user_id'];
+        $user_name = $param['user_name'];
+        $tel = $param['tel'];
+
+        $user = static::findOne([
+            'user_id' => $user_id
+        ]);
+
+        $user->user_name = $user_name;
+        $user->tel = $tel;
+        $user->save();
+
+        $save_id = $user->attribute['user_id'];
+
+        $res = [
+        	'code' => 0,
+        	'msg'=> '',
+        	'data' => $save_id
+        ];
+
+        return $res;
+
+    }
+
+    // 修改用户状态
+    public static function changeStatus($param)
+    {
+        $user_id = $param['user_id'];
+        $status = $param['status'];
+
+        $user = static::findOne([
+            'user_id' => $user_id
+        ]);
+        $user->status = $status;
+        $user->save();
+
+        $save_id = $user->attributes['user_id'];
+        
+        $res = [
+        	'code' => 0,
+        	'msg'=> '',
+        	'data' => $save_id
+        ];
+
+        return $res;
+
+    }
 
 }

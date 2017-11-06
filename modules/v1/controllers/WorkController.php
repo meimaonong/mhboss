@@ -5,9 +5,9 @@ namespace app\modules\v1\controllers;
 use yii\filters\VerbFilter;
 
 use app\controllers\BaseController;
-use app\models\Album;
+use app\models\Work;
 
-class AlbumController extends BaseController
+class WorkController extends BaseController
 {
 
     public function behaviors()
@@ -22,35 +22,38 @@ class AlbumController extends BaseController
         ];
     }
 
-    // getAlbums
-    public function actionGetAlbums()
+
+
+    // getWorklist
+    public function actionGetWorklist()
     {
         $param = $_REQUEST;
 
-        $res = Album::getAlbums($param);
+        $res = Work::getWorklist($param);
 
         return $res;
 
     }
 
-    public function actionGetAlbum()
+    public function actionGetWork()
     {
         $param = $_REQUEST;
 
-        $res = Album::getAlbum($param);
+        $res = Work::getWork($param);
 
         return $res;
 
     }
 
-    public function actionSaveAlbum()
+    public function actionSaveWork()
     {
         $param = $_REQUEST;
 
-        $res = Album::saveAlbum($param);
+        $res = Work::saveWork($param);
 
         return $res;
     }
 
+    
 
 }

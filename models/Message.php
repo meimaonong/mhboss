@@ -132,6 +132,7 @@ class Message extends \yii\db\ActiveRecord
     {
         $user_id = $param['user_id'];
         $message_id = $param['message_id'];
+        $is_read = $param['is_read'];
 
         $message = static::findOne([
                 'message_id' => $message_id,
@@ -140,11 +141,13 @@ class Message extends \yii\db\ActiveRecord
             ]);
             $message->is_read = $is_read;
             $message->save();
+
+        $save_id = $message->attributes['message_id'];
         
         $res = [
             'code' => 0,
             'msg'=> '',
-            'data' => $message
+            'data' => $save_id
         ];
 
         return $res;

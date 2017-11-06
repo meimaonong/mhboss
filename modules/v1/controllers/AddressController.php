@@ -4,10 +4,10 @@ namespace app\modules\v1\controllers;
 
 use yii\filters\VerbFilter;
 
-use app\controllers\BossBaseController;
+use app\controllers\BaseController;
 use app\models\Address;
 
-class AddressController extends BossBaseController
+class AddressController extends BaseController
 {
 
     public function behaviors()
