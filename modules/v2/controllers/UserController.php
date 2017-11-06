@@ -7,6 +7,8 @@ use yii\filters\VerbFilter;
 use app\controllers\BossBaseController;
 use app\models\User;
 
+use app\libs\Utils;
+
 class UserController extends BossBaseController
 {
 

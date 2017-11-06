@@ -1,13 +1,11 @@
 <?php
 
-namespace app\modules\v2\controllers;
+namespace app\modules\v1\controllers;
 
 use yii\filters\VerbFilter;
 
 use app\controllers\BossBaseController;
 use app\models\Address;
-use app\libs\Utils;
-
 
 class AddressController extends BossBaseController
 {
@@ -55,6 +53,7 @@ class AddressController extends BossBaseController
 
         return $res;
     }
+
 
 
 }

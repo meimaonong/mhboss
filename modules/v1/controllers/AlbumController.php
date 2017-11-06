@@ -1,15 +1,13 @@
 <?php
 
-namespace app\modules\v2\controllers;
+namespace app\modules\v1\controllers;
 
 use yii\filters\VerbFilter;
 
 use app\controllers\BossBaseController;
-use app\models\Address;
-use app\libs\Utils;
+use app\models\Album;
 
-
-class AddressController extends BossBaseController
+class AlbumController extends BossBaseController
 {
 
     public function behaviors()
@@ -24,34 +22,32 @@ class AddressController extends BossBaseController
         ];
     }
 
-    // saveAddress
-
-    public function actionSaveAddress()
+    // getAlbums
+    public function actionGetAlbums()
     {
         $param = $_REQUEST;
 
-        $res = Address::saveAddress($param);
+        $res = Album::getAlbums($param);
 
         return $res;
 
     }
 
-    // 获取用户地址
-    public function actionGetAddress()
+    public function actionGetAlbum()
     {
         $param = $_REQUEST;
 
-        $res = Address::getAddress($param);
+        $res = Album::getAlbum($param);
 
         return $res;
+
     }
 
-    // 获取地址列表
-    public function actionGetAddresslist()
+    public function actionSaveAlbum()
     {
         $param = $_REQUEST;
 
-        $res = Address::getAddresslist($param);
+        $res = Album::saveAlbum($param);
 
         return $res;
     }

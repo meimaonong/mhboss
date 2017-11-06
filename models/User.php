@@ -72,4 +72,8 @@ class User extends \yii\db\ActiveRecord
             'updated_time' => 'Updated Time',
         ];
     }
+
+
+    
+
 }

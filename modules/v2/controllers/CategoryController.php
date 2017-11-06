@@ -5,11 +5,12 @@ namespace app\modules\v2\controllers;
 use yii\filters\VerbFilter;
 
 use app\controllers\BossBaseController;
-use app\models\Address;
+use app\models\Category;
+
 use app\libs\Utils;
 
 
-class AddressController extends BossBaseController
+class CategoryController extends BossBaseController
 {
 
     public function behaviors()
@@ -24,34 +25,33 @@ class AddressController extends BossBaseController
         ];
     }
 
-    // saveAddress
-
-    public function actionSaveAddress()
+    // 保存分类
+    public function actionSaveCategory()
     {
         $param = $_REQUEST;
 
-        $res = Address::saveAddress($param);
+        $res = Category::saveCategory($param);
 
         return $res;
 
     }
 
-    // 获取用户地址
-    public function actionGetAddress()
+    // 获取分类
+    public function actionGetCategory()
     {
         $param = $_REQUEST;
 
-        $res = Address::getAddress($param);
+        $res = Category::getCategory($param);
 
         return $res;
     }
 
-    // 获取地址列表
-    public function actionGetAddresslist()
+    // 获取分类列表
+    public function actionGetCategorylist()
     {
         $param = $_REQUEST;
 
-        $res = Address::getAddresslist($param);
+        $res = Category::getCategorylist($param);
 
         return $res;
     }
