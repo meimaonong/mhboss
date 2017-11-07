@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\v1\controllers;
+namespace app\modules\v2\controllers;
 
 use yii\filters\VerbFilter;
 
@@ -78,7 +78,7 @@ class WorkController extends BossBaseController
         return $res;
     }
 
-    // saveWork
+    // checkWork
     public function actionCheckWork()
     {
         $param = $_REQUEST;
