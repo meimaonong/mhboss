@@ -4,10 +4,10 @@ namespace app\modules\v1\controllers;
 
 use yii\filters\VerbFilter;
 
-use app\controllers\BaseController;
+use app\controllers\BossBaseController;
 use app\models\Work;
 
-class WorkController extends BaseController
+class WorkController extends BossBaseController
 {
 
     public function behaviors()
@@ -78,6 +78,14 @@ class WorkController extends BaseController
         return $res;
     }
 
+    // saveWork
+    public function actionCheckWork()
+    {
+        $param = $_REQUEST;
 
+        $res = Work::checkWork($param);
+
+        return $res;
+    }
 
 }
