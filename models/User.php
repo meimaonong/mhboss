@@ -83,7 +83,7 @@ class User extends \yii\db\ActiveRecord
 
         $reqUrl = 'https://api.weixin.qq.com/sns/jscode2session?appid='. $AppId .'&secret='. $AppSecret .'&js_code='. $code .'&grant_type=authorization_code';
  
-        $result = $this->httpGet($reqUrl);
+        $result = Yii::$app->httpclient->get($reqUrl, [], ['http_errors' => false]);
         $rObj = json_decode($result, true);
 
         $user = User::findOne([

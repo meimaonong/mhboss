@@ -109,7 +109,13 @@ class Work extends \yii\db\ActiveRecord
         $category_id = $param['category_id'];
 
         $work_list = static::find()
-            ->where(['category_id' => $category_id, 'work_check_status'=>3, 'work_buy_status'=>0])
+            ->where([
+                'category_id' => $category_id, 
+                'work_check_status'=>3, 
+                'work_buy_status'=>0,
+                'del_flag'=>0
+            ])
+            ->orderBy('work_id desc')
             ->asArray()
             ->all();
 
